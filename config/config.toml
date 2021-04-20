@@ -1,0 +1,47 @@
+# HTTP Server
+[server]
+Address = ":8199"
+ServerRoot = "public"
+ServerAgent = "gf-app"
+LogPath = "/tmp/log/gf-app/server"
+
+# Logger.
+[logger]
+Path = "E:/GoGF/public/log"
+Level = "all"
+Stdout = true
+RotateSize = "200M"
+RotateBackupExpire = "7d"
+[logger.test1]
+Path = "E:/GoGF/public/log/test1"
+file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
+[logger.test2]
+Path = "E:/GoGF/public/log/test2"
+file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
+
+# Template.
+[viewer]
+Path = "template"
+DefaultFile = "index.html"
+Delimiters = ["${", "}"]
+
+# Database.
+[database]
+[[database.default]]
+link = "mysql:root:root@tcp(127.0.0.1:3306)/gf-test"
+debug = true
+dryRun = true
+# Database logger.
+[database.logger]
+Path = "E:/GoGF/public/log/db"
+Level = "all"
+Stdout = true
+#redis
+[redis]
+default = "127.0.0.1:6379,0,root"
+
+#gfcli
+[gfcli]
+[[gfcli.gen.dao]]
+link = "mysql:root:root@tcp(127.0.0.1:3306)/gf-test"
+tables = "user,student"
