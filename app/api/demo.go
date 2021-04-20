@@ -1,10 +1,23 @@
 package api
 
 import (
+	"fmt"
+	"github.com/gogf/gf/encoding/gjson"
 	"github.com/gogf/gf/net/ghttp"
 )
 
 type Object struct{}
+
+type Req struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type Res struct {
+	Code    int
+	Message string
+	Data    interface{}
+}
 
 func (c *Object) Show(r *ghttp.Request) {
 	r.Response.Write("show")
@@ -12,4 +25,13 @@ func (c *Object) Show(r *ghttp.Request) {
 
 func (c *Object) TestObject(r *ghttp.Request) {
 	r.Response.Write("test-object")
+}
+
+func (c *Object) User(r *ghttp.Request) {
+	if j, err := gjson.DecodeToJson(r.GetBodyString()); err != nil {
+		fmt.Println(err)
+	} else {
+		req := Req{Name: j.GetString("name"), Password: j.GetString("password")}
+		r.Response.Write(Res{Code: 200, Message: "success", Data: req})
+	}
 }
