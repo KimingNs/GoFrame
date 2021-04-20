@@ -33,6 +33,9 @@ func (c *Object) User(r *ghttp.Request) {
 	} else {
 		req := Req{Name: j.GetString("name"), Password: j.GetString("password")}
 		//返回json格式
-		r.Response.WriteJson(Res{Code: 200, Message: "success", Data: req})
+		err := r.Response.WriteJson(Res{Code: 200, Message: "success", Data: req})
+		if err != nil {
+			return
+		}
 	}
 }
