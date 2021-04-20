@@ -14,9 +14,9 @@ type Req struct {
 }
 
 type Res struct {
-	Code    int
-	Message string
-	Data    interface{}
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
 }
 
 func (c *Object) Show(r *ghttp.Request) {
@@ -32,6 +32,7 @@ func (c *Object) User(r *ghttp.Request) {
 		fmt.Println(err)
 	} else {
 		req := Req{Name: j.GetString("name"), Password: j.GetString("password")}
-		r.Response.Write(Res{Code: 200, Message: "success", Data: req})
+		//返回json格式
+		r.Response.WriteJson(Res{Code: 200, Message: "success", Data: req})
 	}
 }
