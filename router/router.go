@@ -14,7 +14,7 @@ func init() {
 		s.Group("/:route", func(group *ghttp.RouterGroup) {
 			group.Middleware(MiddlewareErrorHandler)
 			group.ALL("/*", func(r *ghttp.Request) {
-				panic("db error: sql is xxxxxxx")
+				panic("find error page")
 			})
 		})
 		//group.ALL("/hello", api.Hello)
@@ -28,6 +28,6 @@ func MiddlewareErrorHandler(r *ghttp.Request) {
 	r.Middleware.Next()
 	if r.Response.Status >= http.StatusInternalServerError {
 		r.Response.ClearBuffer()
-		r.Response.Writeln("服务器居然开小差了，请稍后再试吧！")
+		r.Response.Writeln("服务器外出打怪升级，至今未回，如有发现，重金奖赏")
 	}
 }
