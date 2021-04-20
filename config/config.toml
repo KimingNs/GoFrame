@@ -3,20 +3,26 @@
 Address = ":8199"
 ServerRoot = "public"
 ServerAgent = "gf-app"
-LogPath = "/tmp/log/gf-app/server"
+LogPath = "public/log/ServerLog"
+ErrorLogPattern = "error-{Y-m-d}.log"  # 异常错误日志文件格式。默认为"error-{Ymd}.log"
+AccessLogEnabled = true              # 是否记录访问日志。默认为false
+AccessLogPattern = "access-{Y-m-d}.log" # 访问日志文件格式。默认为"access-{Ymd}.log"
+SessionIdName = "sessionId"
+SessionPath = "public/log/session"
+SessionMaxAge = "24h"
 
 # Logger.
 [logger]
-Path = "E:/GoGF/public/log"
+Path = "public/log/ServerLog"
 Level = "all"
 Stdout = true
 RotateSize = "200M"
 RotateBackupExpire = "7d"
 [logger.test1]
-Path = "E:/GoGF/public/log/test1"
+Path = "public/log/test1"
 file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
 [logger.test2]
-Path = "E:/GoGF/public/log/test2"
+Path = "public/log/test2"
 file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
 
 # Template.
@@ -33,7 +39,7 @@ debug = true
 dryRun = true
 # Database logger.
 [database.logger]
-Path = "E:/GoGF/public/log/db"
+Path = "public/log/db"
 Level = "all"
 Stdout = true
 #redis
