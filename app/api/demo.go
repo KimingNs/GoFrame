@@ -1,13 +1,15 @@
 package api
 
-import "github.com/gogf/gf/net/ghttp"
+import (
+	"github.com/gogf/gf/net/ghttp"
+)
 
-type Controller struct{}
+type Object struct{}
 
-func (c *Controller) Index(r *ghttp.Request) {
-	r.Response.Write("index")
+func (c *Object) Show(r *ghttp.Request) {
+	r.Response.Write("show")
 }
 
-func (c *Controller) Show(r *ghttp.Request) {
-	r.Response.Write("show")
+func (c *Object) TestObject(r *ghttp.Request) {
+	r.Response.Write("test-object")
 }

@@ -9,6 +9,9 @@ import (
 func init() {
 	s := g.Server()
 	s.Group("/", func(group *ghttp.RouterGroup) {
-		group.ALL("/hello", api.Hello)
+		//group.ALL("/hello", api.Hello)
+
+		//路由注册-对象注册
+		s.BindObject("POST:/demo", api.Object{})
 	})
 }
