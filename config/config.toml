@@ -34,7 +34,7 @@ Delimiters = ["${", "}"]
 [[database.default]]
 link = "mysql:root:root@tcp(127.0.0.1:3306)/gf-test"
 debug = true
-dryRun = true
+#dryRun = true
 # Database logger.
 [database.logger]
 Path = "public/log/db"
