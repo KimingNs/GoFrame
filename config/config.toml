@@ -13,16 +13,14 @@ SessionMaxAge = "24h"
 
 # Logger.
 [logger]
-Path = "public/log/ServerLog"
+Path = "public/log/test"
+file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
 Level = "all"
 Stdout = true
 RotateSize = "200M"
 RotateBackupExpire = "7d"
-[logger.test1]
-Path = "public/log/test1"
-file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
-[logger.test2]
-Path = "public/log/test2"
+[logger.error]
+Path = "public/log/error"
 file = "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
 
 # Template.
