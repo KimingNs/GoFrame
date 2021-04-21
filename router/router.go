@@ -27,6 +27,9 @@ func init() {
 func MiddlewareErrorHandler(r *ghttp.Request) {
 	r.Middleware.Next()
 	if r.Response.Status >= http.StatusInternalServerError {
+		if err := r.GetError(); err != nil {
+			g.Log("error").Error(err)
+		}
 		r.Response.ClearBuffer()
 		r.Response.Writeln("服务器外出打怪升级，至今未回，如有发现，重金奖赏")
 	}
