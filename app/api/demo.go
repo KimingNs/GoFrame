@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/gogf/gf/encoding/gjson"
+	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -33,7 +34,22 @@ func (c *Object) User(r *ghttp.Request) {
 	} else {
 		req := Req{Name: j.GetString("name"), Password: j.GetString("password")}
 		//返回json格式
-		err := r.Response.WriteJson(Res{Code: 200, Message: "success", Data: req})
+		err := r.Response.WriteJson(Res{Code: 200, Message: r.Cookie.Get("sessionId"), Data: req})
+		if err != nil {
+			return
+		}
+	}
+}
+
+func (c *Object) TestHttp(r *ghttp.Request) {
+	if _, err := gjson.DecodeToJson(r.GetBodyString()); err != nil {
+		fmt.Println(err)
+	} else {
+		res := g.Client().SetCookie("sessionId", "zhangtianming").ContentJson().PostContent("http://127.0.0.1:8199/demo/user", g.Map{
+			"name":     "testHttp_ztm",
+			"password": "http200",
+		})
+		err := r.Response.WriteJson(res)
 		if err != nil {
 			return
 		}
