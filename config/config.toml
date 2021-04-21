@@ -49,3 +49,7 @@ default = "127.0.0.1:6379,0,root"
 [[gfcli.gen.dao]]
 link = "mysql:root:root@tcp(127.0.0.1:3306)/gf-test"
 tables = "user,student"
+[[gfcli.gen.dao]]
+link = "mysql:loan_api:loan@123456@tcp(47.244.165.169:3306)/db_cogito_tool"
+prefix = "tool_"
+tables = "t_local_cache_whitelist,t_partner_info,t_log_third_callback_202104"
