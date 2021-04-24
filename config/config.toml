@@ -34,6 +34,9 @@ Delimiters = ["${", "}"]
 [[database.default]]
 link = "mysql:root:root@tcp(127.0.0.1:3306)/gf-test"
 debug = true
+[[database.cogito_tool]]
+link = "mysql:loan_api:loan@123456@tcp(47.244.165.169:3306)/db_cogito_tool"
+debug = true
 #dryRun = true
 # Database logger.
 [database.logger]
@@ -51,5 +54,4 @@ link = "mysql:root:root@tcp(127.0.0.1:3306)/gf-test"
 tables = "user,student"
 [[gfcli.gen.dao]]
 link = "mysql:loan_api:loan@123456@tcp(47.244.165.169:3306)/db_cogito_tool"
-prefix = "tool_"
 tables = "t_local_cache_whitelist,t_partner_info,t_log_third_callback_202104"

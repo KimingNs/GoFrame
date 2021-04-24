@@ -18,12 +18,11 @@ func init() {
 				panic("find error page")
 			})
 		})
-		//group.ALL("/hello", api.Hello)
 
 		//路由注册-对象注册
 		s.BindObject("POST:/api/demo", api.Object{})
 		//新接口路径
-		s.BindObject("POST:/demo/hello/", demo.Hello)
+		s.BindObject("POST:/demo/third/", demo.ThirdApi{})
 	})
 }
 
