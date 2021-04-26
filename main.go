@@ -13,7 +13,7 @@ import (
 
 func main() {
 	//testJson()
-	testMysql()
+	//testMysql()
 	s := g.Server()
 	s.SetPort(8199)
 	s.Run()
@@ -47,7 +47,10 @@ func testMysql() {
 	request_json, _ := json.Marshal(m)
 	j, _ := gjson.DecodeToJson(request_json)
 	//查询默认配置
-	partner_info, err := g.DB().Model("t_partner_info").Where("partner_token = ?", j.GetString("partner_token")).One()
+	//partner_info, err := g.DB().Model("t_partner_info").Where("partner_token = ?", j.GetString("partner_token")).One()
+	//查询cogito_tool配置
+	partner_info, err := g.DB("cogito_tool").Model("t_partner_info").Where("partner_token = ?", j.GetString("partner_token")).One()
+
 	if err != nil {
 		return
 	}
@@ -70,9 +73,8 @@ func testMysql() {
 	//if err != nil {
 	//	return
 	//}
+	//hex.EncodeToString(encrypt)
 	decrypt, err := gaes.DecryptCBC([]byte(j.GetString("params_data")), aes_key.Bytes(), aes_iv.Bytes())
 	fmt.Println(string(decrypt))
 
-	//查询cogito_tool配置
-	//res, err := g.DB("cogito_tool").Model("t_partner_info").Where("partner_token=?", j.GetString("partner_token")).One()
 }

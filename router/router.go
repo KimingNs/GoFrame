@@ -22,7 +22,7 @@ func init() {
 		//路由注册-对象注册
 		s.BindObject("POST:/api/demo", api.Object{})
 		//新接口路径
-		s.BindObject("POST:/demo/third/", demo.ThirdApi{})
+		s.BindObject("POST:/demo/third/", demo.ThirdApiRequest{})
 	})
 }
 
