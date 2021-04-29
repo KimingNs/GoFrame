@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "GoGF/boot"
+	"GoGF/crontab/task"
 	_ "GoGF/router"
 	"encoding/json"
 	"fmt"
@@ -9,14 +10,23 @@ import (
 	"github.com/gogf/gf/crypto/gaes"
 	"github.com/gogf/gf/encoding/gjson"
 	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/os/gcron"
+	"github.com/gogf/gf/os/glog"
+	"github.com/gogf/gf/os/gproc"
+	"github.com/gogf/gf/os/gtime"
+	"os"
+	"time"
 )
 
 func main() {
 	//testJson()
 	//testMysql()
-	s := g.Server()
-	s.SetPort(8199)
-	s.Run()
+	//testCrontab()
+	testManager()
+
+	//s := g.Server()
+	//s.SetPort(8199)
+	//s.Run()
 
 }
 
@@ -77,4 +87,38 @@ func testMysql() {
 	decrypt, err := gaes.DecryptCBC([]byte(j.GetString("params_data")), aes_key.Bytes(), aes_iv.Bytes())
 	fmt.Println(string(decrypt))
 
+}
+
+func testCrontab() {
+	//设置定时任务日志路径与级别
+	gcron.SetLogPath("public/log/crontab")
+	gcron.SetLogLevel(glog.LEVEL_ALL)
+
+	//glog.Println 是直接输出到控制台
+	//g.Log().Println 是输出到控制台和日志配置目录
+	gcron.AddSingleton("0 * * * * *", task.Test2, "minute-crontab")
+	gcron.AddSingleton("* * * * * *", task.Test1, "second-crontab")
+	g.Dump(gcron.Entries())
+	gcron.Stop("second-crontab")
+	gcron.Start("second-crontab")
+
+	time.Sleep(10 * time.Second)
+}
+
+func testManager() {
+	fmt.Printf("%d: I am child? %v\n", gproc.Pid(), gproc.IsChild())
+	if gproc.IsChild() {
+		gtime.FuncCost(func() {
+			gproc.Send(gproc.PPid(), []byte(gtime.Datetime()))
+		})
+		select {}
+	} else {
+		m := gproc.NewManager()
+		p := m.NewProcess(os.Args[0], os.Args, os.Environ())
+		p.Start()
+		for {
+			msg := gproc.Receive()
+			fmt.Printf("receive from %d, data: %s\n", msg.SendPid, string(msg.Data))
+		}
+	}
 }
